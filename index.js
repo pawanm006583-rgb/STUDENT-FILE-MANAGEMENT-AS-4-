@@ -1,0 +1,56 @@
+const fs = require("fs");
+
+
+const studentData = `Name: Pawan Mishra Course: Full Stack Development Technology: Node.js`;
+
+fs.writeFile("student.txt", studentData, (err) => {
+    if (err) {
+        console.log("Error creating file:", err);
+        return;
+    }
+
+    console.log("File created successfully");
+
+
+    fs.readFile("student.txt", "utf8", (err, data) => {
+        if (err) {
+            console.log("Error reading file:", err);
+            return;
+        }
+
+        console.log("\nStudent Information:");
+        console.log(data);
+
+        
+        const additionalData = `Experience: 1 Year City: Kolkata`;
+
+        fs.appendFile("student.txt", additionalData, (err) => {
+            if (err) {
+                console.log("Error updating file:", err);
+                return;
+            }
+
+            console.log("\nData updated successfully");
+
+            
+            fs.rename("students.txt", "studentDetails.txt", (err) => {
+                if (err) {
+                    console.log("Error renaming file:", err);
+                    return;
+                }
+
+                console.log("File renamed successfully");
+
+                
+                fs.unlink("studentDetails.txt", (err) => {
+                    if (err) {
+                        console.log("Error deleting file:", err);
+                        return;
+                    }
+
+                    console.log("File deleted successfully");
+                });
+            });
+        });
+    });
+});
